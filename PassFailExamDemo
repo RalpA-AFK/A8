@@ -1,0 +1,77 @@
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+/**
+   This program demonstrates the PassFailExam class using a GUI interface.
+*/
+
+public class PassFailExamDemo {
+    public static void main(String[] args) {
+        // Create the JFrame to hold the components
+        JFrame frame = new JFrame("Pass/Fail Exam Grading");
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setSize(800, 600);
+
+        // Create a panel to hold all the components
+        JPanel panel = new JPanel();
+        panel.setLayout(new GridLayout(4, 2));
+
+        // Add components to the panel
+        JLabel lblQuestions = new JLabel("How many questions are on the exam?");
+        JTextField txtQuestions = new JTextField();
+        JLabel lblMissed = new JLabel("How many questions did the student miss?");
+        JTextField txtMissed = new JTextField();
+        JLabel lblMinPassing = new JLabel("What is the minimum passing score?");
+        JTextField txtMinPassing = new JTextField();
+
+        JButton btnCalculate = new JButton("Calculate Grade");
+
+        // Create the output fields for results
+        JTextArea resultArea = new JTextArea(5, 30);
+        resultArea.setEditable(false);
+        JScrollPane scrollPane = new JScrollPane(resultArea);
+
+        // Add components to the panel
+        panel.add(lblQuestions);
+        panel.add(txtQuestions);
+        panel.add(lblMissed);
+        panel.add(txtMissed);
+        panel.add(lblMinPassing);
+        panel.add(txtMinPassing);
+        panel.add(btnCalculate);
+        panel.add(scrollPane);
+
+        // Add the panel to the frame
+        frame.add(panel);
+        frame.setVisible(true);
+
+        // ActionListener for the button
+        btnCalculate.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                try {
+                    // Retrieve user inputs
+                    int questions = Integer.parseInt(txtQuestions.getText());
+                    int missed = Integer.parseInt(txtMissed.getText());
+                    double minPassing = Double.parseDouble(txtMinPassing.getText());
+
+                    // Create the PassFailExam object
+                    PassFailExam exam = new PassFailExam(questions, missed, minPassing);
+
+                    // Generate output text
+                    String output = "Each question counts " + (Math.round(exam.getPointsEach() * 10.0) / 10.0) + " points.\n";
+                    output += "The exam score is approximately " + (Math.round(exam.getScore() * 10.0) / 10.0) + ".\n";
+                    output += "The exam grade is approximately " + exam.getGrade() + "\n";
+
+                    // Display the result
+                    resultArea.setText(output);
+                } catch (NumberFormatException ex) {
+                    // Handle invalid input
+                    resultArea.setText("Invalid input. Please enter valid numbers.");
+                }
+            }
+        });
+    }
+}
