@@ -1,3 +1,4 @@
+package week8;
 
 /**
 This class determines a passing or failing grade for
@@ -29,7 +30,7 @@ public PassFailExam(int questions, int missed,
    double numericScore;
 
    // Set the numQuestions and numMissed fields.
-   numQuestions = questions;
+   setNumQuestions(questions);
    numMissed = missed;
 
    // Calculate the points for each question and
@@ -63,4 +64,13 @@ public int getNumMissed()
 {
    return numMissed;
 }
+
+public int getNumQuestions() {
+	return numQuestions;
 }
+
+public void setNumQuestions(int numQuestions) {
+	this.numQuestions = numQuestions;
+}
+}
+
